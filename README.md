@@ -5,8 +5,11 @@
 - 覆写脚本修改自：<https://github.com/dahaha-365/YaNet/blob/main/Mihomo/global_script.js>
 
 - 其他参考:
+
   <https://wiki.metacubex.one/config/>
+
   <https://github.com/LennoC/Template4Clash>
+
   <https://github.com/YiXuanZX/rules>
 
 ## 规则来源
