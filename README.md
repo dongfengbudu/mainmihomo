@@ -16,7 +16,7 @@
 
 - [MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat)
 
-- [217heidai/adblockfilters](https://github.com/217heidai/adblockfilters)
+- [TG-Twilight/AWAvenue-Ads-Rule](https://github.com/TG-Twilight/AWAvenue-Ads-Rule)
 
 - [wwqgtxx/clash-rules](https://github.com/wwqgtxx/clash-rules)
 
