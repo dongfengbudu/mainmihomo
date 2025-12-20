@@ -234,6 +234,11 @@ const ruleProviders = {
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs",
     path: "./ruleset/twitter.mrs",
   },
+  twitter_ip: {
+    ...ruleProviderCommonIp,
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs",
+    path: "./ruleset/twitter_ip.mrs",
+  },
   telegram: {
     ...ruleProviderCommonDomain,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs",
@@ -340,7 +345,10 @@ const serviceConfigs = [
     key: "twitter",
     name: "Twitter",
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png",
-    rules: ["RULE-SET,twitter,Twitter"],
+    rules: [
+      "RULE-SET,twitter,Twitter",
+      "RULE-SET,twitter_ip,Twitter,no-resolve",
+    ],
   },
   {
     key: "ads",
