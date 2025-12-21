@@ -42,7 +42,6 @@ const rules = [
   "RULE-SET,private,DIRECT",
   "RULE-SET,private_ip,DIRECT,no-resolve",
   "RULE-SET,steam_cn,DIRECT",
-  "DOMAIN-SUFFIX,steamserver.net,DIRECT",
 ];
 
 // 地区定义
@@ -432,11 +431,17 @@ function main(config) {
     "dns-hijack": ["udp://any:53", "tcp://any:53"],
   };
 
-  config.proxies.push({
-    name: "直连",
-    type: "direct",
-    udp: true,
-  });
+  config.proxies.push(
+    {
+      name: "直连",
+      type: "direct",
+      udp: true,
+    },
+    {
+      name: "拦截",
+      type: "reject",
+    }
+  );
 
   // 3.2 高效代理分类 (单次遍历)
   const regionGroups = {};
@@ -531,7 +536,7 @@ function main(config) {
 
       let groupProxies;
       if (svc.reject) {
-        groupProxies = ["REJECT", "直连", "默认节点"];
+        groupProxies = ["拦截", "直连", "默认节点"];
       } else if (svc.key === "biliintl" || svc.key === "bahamut") {
         groupProxies = ["默认节点", "直连", ...regionGroupNames];
       } else {
@@ -552,8 +557,8 @@ function main(config) {
   // 3.4 添加通用兜底策略组
   rules.push(
     "RULE-SET,gfw,其他外网",
-    "RULE-SET,cn,DIRECT",
-    "RULE-SET,cn_ip,DIRECT",
+    "RULE-SET,cn,国内网站",
+    "RULE-SET,cn_ip,国内网站",
     "MATCH,其他外网"
   );
 
@@ -562,14 +567,14 @@ function main(config) {
       ...groupBaseOption,
       name: "下载软件",
       type: "select",
-      proxies: ["直连", "REJECT", "默认节点", "国内网站", ...regionGroupNames],
+      proxies: ["直连", "拦截", "默认节点", ...regionGroupNames],
       icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png",
     },
     {
       ...groupBaseOption,
       name: "其他外网",
       type: "select",
-      proxies: ["默认节点", "国内网站", ...regionGroupNames],
+      proxies: ["默认节点", ...regionGroupNames],
       icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming!CN.png",
     },
     {
