@@ -397,31 +397,22 @@ function main(config) {
   config["sniffer"] = {
     enable: true,
     "force-dns-mapping": true,
-    "parse-pure-ip": false,
+    "parse-pure-ip": true,
     "override-destination": true,
     sniff: {
-      TLS: {
-        ports: [443, 8443],
-      },
       HTTP: {
         ports: [80, "8080-8880"],
       },
+      TLS: {
+        ports: [443, 8443],
+      },
+
       QUIC: {
         ports: [443, 8443],
       },
     },
     "skip-src-address": skipIps,
     "skip-dst-address": skipIps,
-    "force-domain": [
-      "+.google.com",
-      "+.googleapis.com",
-      "+.googleusercontent.com",
-      "+.youtube.com",
-      "+.facebook.com",
-      "+.messenger.com",
-      "+.fbcdn.net",
-      "fbcdn-a.akamaihd.net",
-    ],
     "skip-domain": ["Mijia Cloud", "+.oray.com", "+.push.apple.com"],
   };
 
