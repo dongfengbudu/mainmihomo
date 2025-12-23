@@ -399,7 +399,8 @@ function main(config) {
   };
   config["unified-delay"] = true;
   config["tcp-concurrent"] = true;
-  config["keep-alive-interval"] = 1800;
+  config["keep-alive-idle"] = 600;
+  config["keep-alive-interval"] = 60;
   config["find-process-mode"] = "strict";
 
   config["sniffer"] = {
