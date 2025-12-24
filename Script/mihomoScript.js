@@ -45,6 +45,7 @@ const rules = [
   "RULE-SET,AWAvenue_Ads,广告拦截",
   "RULE-SET,applications,下载软件",
   "RULE-SET,steam_cn,DIRECT",
+  "RULE-SET,epicgames,DIRECT",
 ];
 
 // 地区定义
@@ -166,6 +167,11 @@ const ruleProviders = {
     ...ruleProviderCommonDomain,
     url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/fakeip-filter.mrs",
     path: "./ruleset/fakeip-filter.mrs",
+  },
+  epicgames: {
+    ...ruleProviderCommonDomain,
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/epicgames.mrs",
+    path: "./ruleset/epicgames.mrs",
   },
   ai: {
     ...ruleProviderCommonDomain,
