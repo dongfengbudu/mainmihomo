@@ -43,10 +43,13 @@ const rules = [
   "RULE-SET,private,DIRECT",
   "RULE-SET,private_ip,DIRECT,no-resolve",
   "RULE-SET,adblockmihomolite,广告拦截",
-  "RULE-SET,applications,下载软件",
   "RULE-SET,steam_cn,DIRECT",
   "RULE-SET,epicgames,DIRECT",
   "RULE-SET,nvidia_cn,DIRECT",
+  "PROCESS-NAME,nvcontainer.exe,下载专用", // NVIDIA App 下载器
+  "DOMAIN-SUFFIX,githubusercontent.com,Github", // download 规则集包含此域名，但github直连下载速度比较慢，因此放在download前面优先匹配
+  "RULE-SET,download,下载专用",
+  "RULE-SET,applications,下载专用",
 ];
 
 // 地区定义
@@ -119,27 +122,22 @@ const regionDefinitions = [
 ];
 
 // 通用配置
+const ruleProviderFormatYaml = { format: "yaml" };
+const ruleProviderFormatTxt = { format: "text" };
+const ruleProviderFormatMrs = { format: "mrs" };
+
 const ruleProviderCommonDomain = {
   type: "http",
-  format: "mrs",
   interval: 86400,
   behavior: "domain",
 };
 const ruleProviderCommonIpcidr = {
   type: "http",
-  format: "mrs",
   interval: 86400,
   behavior: "ipcidr",
 };
-const ruleProviderCommonClassicalTxt = {
+const ruleProviderCommonClassical = {
   type: "http",
-  format: "text",
-  interval: 86400,
-  behavior: "classical",
-};
-const ruleProviderCommonClassicalYaml = {
-  type: "http",
-  format: "yaml",
   interval: 86400,
   behavior: "classical",
 };
@@ -156,121 +154,151 @@ const groupBaseOption = {
 const ruleProviders = {
   adblockmihomolite: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomolite.mrs",
     path: "./ruleset/adblockmihomolite.mrs",
   },
   applications: {
-    ...ruleProviderCommonClassicalTxt,
+    ...ruleProviderCommonClassical,
+    ...ruleProviderFormatTxt,
     url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/applications.list",
     path: "./ruleset/applications.list",
   },
+  download: {
+    ...ruleProviderCommonDomain,
+    ...ruleProviderFormatTxt,
+    url: "https://ruleset.skk.moe/Clash/domainset/download.txt",
+    path: "./ruleset/download.mrs",
+  },
   fakeip_filter: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/fakeip-filter.mrs",
     path: "./ruleset/fakeip-filter.mrs",
   },
   epicgames: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/epicgames.mrs",
     path: "./ruleset/epicgames.mrs",
   },
   nvidia_cn: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/nvidia@cn.mrs",
     path: "./ruleset/nvidia@cn.mrs",
   },
   ai: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.mrs",
     path: "./ruleset/ai.mrs",
   },
   youtube: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs",
     path: "./ruleset/youtube.mrs",
   },
   google: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs",
     path: "./ruleset/google.mrs",
   },
   google_ip: {
     ...ruleProviderCommonIpcidr,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs",
     path: "./ruleset/google_ip.mrs",
   },
   github: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs",
     path: "./ruleset/github.mrs",
   },
   microsoft: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs",
     path: "./ruleset/microsoft.mrs",
   },
   microsoft_cn: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft@cn.mrs",
     path: "./ruleset/microsoft@cn.mrs",
   },
   telegram: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs",
     path: "./ruleset/telegram.mrs",
   },
   telegram_ip: {
     ...ruleProviderCommonIpcidr,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs",
     path: "./ruleset/telegram_ip.mrs",
   },
   pixiv: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat//meta/geo/geosite/pixiv.mrs",
     path: "./ruleset/pixiv.mrs",
   },
   steam: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs",
     path: "./ruleset/steam.mrs",
   },
   steam_cn: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam@cn.mrs",
     path: "./ruleset/steam@cn.mrs",
   },
   twitter: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs",
     path: "./ruleset/twitter.mrs",
   },
   twitter_ip: {
     ...ruleProviderCommonIpcidr,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs",
     path: "./ruleset/twitter_ip.mrs",
   },
   private: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs",
     path: "./ruleset/private.mrs",
   },
   private_ip: {
     ...ruleProviderCommonIpcidr,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs",
     path: "./ruleset/private_ip.mrs",
   },
   gfw: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata//mihomo-ruleset/gfw.mrs",
     path: "./ruleset/gfw.mrs",
   },
   cn: {
     ...ruleProviderCommonDomain,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/YiXuanZX/rules/main/cn-additional-list.mrs",
     path: "./ruleset/cn.mrs",
   },
   cn_ip: {
     ...ruleProviderCommonIpcidr,
+    ...ruleProviderFormatMrs,
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs",
     path: "./ruleset/cn_ip.mrs",
   },
@@ -591,7 +619,7 @@ function main(config) {
   functionalGroups.push(
     {
       ...groupBaseOption,
-      name: "下载软件",
+      name: "下载专用",
       type: "select",
       proxies: ["直连", "拦截", "默认节点", ...regionGroupNames],
       icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png",
