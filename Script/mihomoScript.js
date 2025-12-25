@@ -42,7 +42,7 @@ const skipIps = [
 const rules = [
   "RULE-SET,private,DIRECT",
   "RULE-SET,private_ip,DIRECT,no-resolve",
-  "RULE-SET,AWAvenue_Ads,广告拦截",
+  "RULE-SET,adblockmihomolite,广告拦截",
   "RULE-SET,applications,下载软件",
   "RULE-SET,steam_cn,DIRECT",
   "RULE-SET,epicgames,DIRECT",
@@ -154,10 +154,10 @@ const groupBaseOption = {
 
 // 定义 Rule Providers
 const ruleProviders = {
-  AWAvenue_Ads: {
+  adblockmihomolite: {
     ...ruleProviderCommonDomain,
-    url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.mrs",
-    path: "./ruleset/AWAvenue-Ads-Rule-Clash.mrs",
+    url: "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomolite.mrs",
+    path: "./ruleset/adblockmihomolite.mrs",
   },
   applications: {
     ...ruleProviderCommonClassicalTxt,
