@@ -46,78 +46,85 @@ const rules = [
   "RULE-SET,steam_cn,DIRECT",
   "RULE-SET,epicgames,DIRECT",
   "RULE-SET,nvidia_cn,DIRECT",
-  "PROCESS-NAME,nvcontainer.exe,下载专用", // NVIDIA App 下载器
+  "PROCESS-NAME,nvcontainer.exe,DIRECT", // NVIDIA App 下载器
+  "RULE-SET,applications,DIRECT",
   "DOMAIN-SUFFIX,githubusercontent.com,Github", // download 规则集包含此域名，但github直连下载速度比较慢，因此放在download前面优先匹配
+  "DOMAIN-SUFFIX,greasyfork.org,其他外网",
   "RULE-SET,download,下载专用",
-  "RULE-SET,applications,下载专用",
 ];
 
 // 地区定义
 const regionDefinitions = [
   {
     name: "🇭🇰 香港",
-    regex: /港|🇭🇰|hk|hongkong|hong kong/i,
+    regex: /^(?!.*0\.)(?=.*(港|🇭🇰|hk|hongkong|hong kong)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png",
   },
   {
     name: "🇺🇸 美国",
-    regex: /(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*/i,
+    regex:
+      /^(?!.*0\.)(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|america|united states)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png",
   },
   {
     name: "🇯🇵 日本",
-    regex: /日本|🇯🇵|jp|japan/i,
+    regex: /^(?!.*0\.)(?=.*(日本|🇯🇵|jp|japan)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png",
   },
   {
     name: "🇰🇷 韩国",
-    regex: /韩|🇰🇷|kr|korea/i,
+    regex: /^(?!.*0\.)(?=.*(韩|🇰🇷|kr|korea)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png",
   },
   {
     name: "🇸🇬 新加坡",
-    regex: /新加坡|🇸🇬|sg|singapore/i,
+    regex: /^(?!.*0\.)(?=.*(新加坡|🇸🇬|sg|singapore)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png",
   },
   {
     name: "🇨🇳 中国大陆",
-    regex: /中国|🇨🇳|cn|china/i,
+    regex: /^(?!.*0\.)(?=.*(中国|🇨🇳|cn|china)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China_Map.png",
   },
   {
     name: "🇹🇼 台湾省",
-    regex: /台湾|🇹🇼|tw|taiwan|tai wan/i,
+    regex: /^(?!.*0\.)(?=.*(台湾|🇹🇼|tw|taiwan|tai wan)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png",
   },
   {
     name: "🇬🇧 英国",
-    regex: /英|🇬🇧|uk|united kingdom|great britain/i,
+    regex: /^(?!.*0\.)(?=.*(英|🇬🇧|uk|united kingdom|great britain)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png",
   },
   {
     name: "🇩🇪 德国",
-    regex: /德国|🇩🇪|de|germany/i,
+    regex: /^(?!.*0\.)(?=.*(德国|🇩🇪|de|germany)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png",
   },
   {
     name: "🇲🇾 马来西亚",
-    regex: /马来|🇲🇾|my|malaysia/i,
+    regex: /^(?!.*0\.)(?=.*(马来|🇲🇾|my|malaysia)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Malaysia.png",
   },
   {
     name: "🇹🇷 土耳其",
-    regex: /土耳其|🇹🇷|tk|turkey/i,
+    regex: /^(?!.*0\.)(?=.*(土耳其|🇹🇷|tk|turkey)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Turkey.png",
   },
   {
     name: "🇨🇦 加拿大",
-    regex: /加拿大|🇨🇦|ca|canada/i,
+    regex: /^(?!.*0\.)(?=.*(加拿大|🇨🇦|ca|canada)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png",
   },
   {
     name: "🇦🇺 澳大利亚",
-    regex: /澳大利亚|🇦🇺|au|australia|sydney/i,
+    regex: /^(?!.*0\.)(?=.*(澳大利亚|🇦🇺|au|australia|sydney)).*$/iu,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Australia.png",
+  },
+  {
+    name: "⛵ 低倍率节点",
+    regex: /0\.|下载|低倍/u,
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
   },
 ];
 
@@ -621,7 +628,7 @@ function main(config) {
       ...groupBaseOption,
       name: "下载专用",
       type: "select",
-      proxies: ["直连", "拦截", "默认节点", ...regionGroupNames],
+      proxies: ["直连", "默认节点", ...regionGroupNames],
       icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png",
     },
     {
