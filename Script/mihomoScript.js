@@ -53,78 +53,131 @@ const rules = [
   "RULE-SET,download,下载专用",
 ];
 
+// 排除小于 0.5 的低倍率节点
+const excludeLowMultiplier = "(?!.*0\\.[0-5])";
+
+// 排除高倍率节点
+// 使用 .source 可以直接获取正则内容的字符串，无需手动处理转义字符
+const excludeHighMultiplier =
+  /(?!.*(?:(?:[*xX✕✖⨉]\s*(?:[2-9]\d*|[1-9]\d+)(?:\.\d+)?)|(?:(?<![\d.])(?:[2-9]\d*|[1-9]\d+)(?:\.\d+)?\s*(?:倍|[*xX✕✖⨉]))))/
+    .source;
+
 // 地区定义
 const regionDefinitions = [
   {
     name: "🇭🇰 香港",
-    regex: /^(?!.*0\.[0-5])(?=.*(港|🇭🇰|hk|hongkong|hong kong)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(港|🇭🇰|hk|hongkong|hong kong)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png",
   },
   {
     name: "🇺🇸 美国",
-    regex:
-      /^(?!.*0\.[0-5])(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|america|united states)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|america|united states)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png",
   },
   {
     name: "🇯🇵 日本",
-    regex: /^(?!.*0\.[0-5])(?=.*(日本|🇯🇵|jp|japan)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(日本|🇯🇵|jp|japan)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png",
   },
   {
     name: "🇰🇷 韩国",
-    regex: /^(?!.*0\.[0-5])(?=.*(韩|🇰🇷|kr|korea)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(韩|🇰🇷|kr|korea)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png",
   },
   {
     name: "🇸🇬 新加坡",
-    regex: /^(?!.*0\.[0-5])(?=.*(新加坡|🇸🇬|sg|singapore)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(新加坡|🇸🇬|sg|singapore)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png",
   },
   {
     name: "🇨🇳 中国大陆",
-    regex: /^(?!.*0\.[0-5])(?=.*(中国|🇨🇳|cn|china)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(中国|🇨🇳|cn|china)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China_Map.png",
   },
   {
     name: "🇹🇼 台湾省",
-    regex: /^(?!.*0\.[0-5])(?=.*(台湾|🇹🇼|tw|taiwan|tai wan)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(台湾|🇹🇼|tw|taiwan|tai wan)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png",
   },
   {
     name: "🇬🇧 英国",
-    regex: /^(?!.*0\.[0-5])(?=.*(英|🇬🇧|uk|united kingdom|great britain)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(英|🇬🇧|uk|united kingdom|great britain)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png",
   },
   {
     name: "🇩🇪 德国",
-    regex: /^(?!.*0\.[0-5])(?=.*(德国|🇩🇪|de|germany)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(德国|🇩🇪|de|germany)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png",
   },
   {
     name: "🇲🇾 马来西亚",
-    regex: /^(?!.*0\.[0-5])(?=.*(马来|🇲🇾|my|malaysia)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(马来|🇲🇾|my|malaysia)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Malaysia.png",
   },
   {
     name: "🇹🇷 土耳其",
-    regex: /^(?!.*0\.[0-5])(?=.*(土耳其|🇹🇷|tk|turkey)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(土耳其|🇹🇷|tk|turkey)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Turkey.png",
   },
   {
     name: "🇨🇦 加拿大",
-    regex: /^(?!.*0\.[0-5])(?=.*(加拿大|🇨🇦|ca|canada)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(加拿大|🇨🇦|ca|canada)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png",
   },
   {
     name: "🇦🇺 澳大利亚",
-    regex: /^(?!.*0\.[0-5])(?=.*(澳大利亚|🇦🇺|au|australia|sydney)).*$/iu,
+    regex: new RegExp(
+      `^${excludeLowMultiplier}${excludeHighMultiplier}(?=.*(澳大利亚|🇦🇺|au|australia|sydney)).*`,
+      "iu"
+    ),
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Australia.png",
   },
   {
     name: "⛵ 低倍率节点",
     regex: /0\.[0-5]|0\.0|下载|低倍/u,
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png",
+  },
+  {
+    name: "✈️ 高倍率节点",
+    regex:
+      /(?:[*xX✕✖⨉]\s*(?:[2-9]\d*|[1-9]\d+)(?:\.\d+)?)|(?:(?<![\d.])(?:[2-9]\d*|[1-9]\d+)(?:\.\d+)?\s*(?:倍|[*xX✕✖⨉]))/iu,
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png",
   },
 ];
 
@@ -389,12 +442,12 @@ const serviceConfigs = [
   },
 ];
 
-const excludeHighPercentage = true;
-const globalRatioLimit = 2;
+// const excludeHighPercentage = true;
+// const globalRatioLimit = 2;
 
-// 倍率正则预编译
-const multiplierRegex =
-  /(?<=[xX✕✖⨉倍率])([1-9]+(\.\d+)*|0{1}\.\d+)(?=[xX✕✖⨉倍率])*/i;
+// // 倍率正则预编译
+// const multiplierRegex =
+//   /(?<=[xX✕✖⨉倍率])([1-9]+(\.\d+)*|0{1}\.\d+)(?=[xX✕✖⨉倍率])*/i;
 
 // --- 3. 主入口 ---
 
@@ -521,13 +574,13 @@ function main(config) {
     const name = proxy.name;
     let matched = false;
 
-    // 检查倍率
-    if (excludeHighPercentage) {
-      const match = multiplierRegex.exec(name);
-      if (match && parseFloat(match[1]) > globalRatioLimit) {
-        continue;
-      }
-    }
+    // // 检查倍率
+    // if (excludeHighPercentage) {
+    //   const match = multiplierRegex.exec(name);
+    //   if (match && parseFloat(match[1]) > globalRatioLimit) {
+    //     continue;
+    //   }
+    // }
 
     // 尝试匹配地区
     for (const region of regionDefinitions) {
@@ -550,7 +603,7 @@ function main(config) {
       generatedRegionGroups.push({
         ...groupBaseOption,
         name: r.name,
-        type: "select",
+        type: "url-test",
         tolerance: 50,
         icon: r.icon,
         proxies: groupData.proxies,
