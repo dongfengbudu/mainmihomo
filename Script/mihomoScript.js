@@ -149,8 +149,8 @@ const ruleProviderCommonClassical = {
   behavior: "classical",
 };
 const groupBaseOption = {
-  interval: 300,
-  timeout: 3000,
+  interval: 600,
+  timeout: 5000,
   url: "https://www.gstatic.com/generate_204",
   lazy: true,
   "max-failed-times": 3,
@@ -550,7 +550,7 @@ function main(config) {
       generatedRegionGroups.push({
         ...groupBaseOption,
         name: r.name,
-        type: "url-test",
+        type: "select",
         tolerance: 50,
         icon: r.icon,
         proxies: groupData.proxies,
